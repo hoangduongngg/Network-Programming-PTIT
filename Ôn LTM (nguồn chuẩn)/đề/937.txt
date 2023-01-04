@@ -1,0 +1,14 @@
+[Mã câu hỏi: 937]Thông tin sản phẩm vì một lý do nào đó đã bị sửa đổi thành không đúng, cụ thể:
+a.	Tên sản phẩm bị đổi ngược từ đầu tiên và từ cuối cùng, ví dụ: “lenovo thinkpad T520” bị chuyển thành “T520 thinkpad lenovo”
+b.	Số lượng sản phẩm cũng bị đảo ngược giá trị, ví dụ từ 9981 thành 1899
+Viết chương trình client giao tiếp với server bằng giao thức UDP tại cổng 2209, thực hiện tiếp nhận thông tin về sản phẩm và sửa các thông tin sai của sản phẩm. Trong đó:
+c.	Đối tượng trao đổi là thể hiện của lớp Product937 được mô tả như sau
+•	Tên đầy đủ của lớp: UDP.Product937
+•	Các thuộc tính: id String, code String, name String, quantity int
+•	Có một hàm khởi tạo đầy đủ các thuộc tính được liệt kê ở trên
+•	Trường dữ liệu: private static final long serialVersionUID = 937; 
+d.	Giao tiếp với server theo kịch bản
+•	Gửi thông điệp là một đối tượng của lớp Product937 với thông tin được thiết lập là code với giá trị là mã sinh viên
+•	Nhận một đối tượng là thể hiện của lớp Product937 từ server với các thông tin được thiết lập thêm là id, name và quantity
+•	Thực hiện sửa các thông tin sai của đối tượng gồm tên và số lượng.  Gửi đối tượng vừa được sửa đổi lên server
+•	Đóng socket và kết thúc.

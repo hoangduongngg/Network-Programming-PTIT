@@ -1,0 +1,4 @@
+47	B19DCCN389	Kiều Đức	Long	D19CNPM6		LongKD.B19CN389@stu.ptit.edu.vn	
+48	B19DCCN402	Nguyễn Văn	Lộc	D19CNPM6		LocNV.B19CN402@stu.ptit.edu.vn	
+49	B19DCCN410	Nguyễn Đức	Lương	D19CNPM6		LuongND.B19CN410@stu.ptit.edu.vn
+67	B19DCCN573	Nguyễn Phi	Tân	D19CNPM2		TanNP.B19CN573@stu.ptit.edu.vn

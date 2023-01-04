@@ -1,0 +1,97 @@
+I. TCP
+1. DataInputStream/DataOutputStream (bài 911, dễ nhất)
+- Hỗ trợ read/write kiểu dữ liệu nguyên thuỷ (String, Integer, Double,...)
+
+2. BufferReader/BufferWritter (bài 721, hay quên câu lệnh xoá bộ nhớ đệm bw.flush) 
+- bw.flush giúp xoá bộ nhớ đệm để đẩy dữ liệu đi (bw.write) ngay cả khi chưa đủ kích thước của bộ đệm, để chắc chắn hơn thì thêm câu lệnh bw.newLine() sau khi bw.write() rồi sau đó mới bw.flush()
+- Hỗ trợ read/write kiểu dữ liệu nguyên thuỷ
+
+3. InputStream/OutputStream (bài 701, hơi lạ xíu)
+- Không hỗ trợ kiểu dữ liệu nguyên thuỷ, chỉ làm việc với kiểu dữ liệu byte
+- InputStream/OutputStream là lớp Interface và có 2 lớp kế thừa từ nó là 
+	DataInputStream/DataOutputStream và BufferReader/BufferWritter (vì tham số truyền vào đều là client.getInputStream() hoặc client.getOutputStream())
+	
+	// Khai báo 
+	Socket client = new Socket(String host, int port);
+        InputStream is = new DataInputStream(client.getInputStream());
+        OutputStream os = new DataOutputStream(client.getOutputStream());
+
+	// Chuyển dữ liệu nguyên thuỷ thành mảng byte rồi gửi lên server 
+	String msv = "B16DCCN999;701";
+        byte[] send = msv.getBytes(); // Chuyển dữ liệu kiểu String thành mảng byte
+        os.write(send);
+	
+	// Khai báo mảng byte để đọc dữ liệu trả về (giống khai báo mảng byte[] nhận dữ liệu bên UDP ý)
+	byte[] receive = new byte[1024];
+        is.read(receive); // lấy dữ liệu nhận được gán váo mảng receive
+	  String s = new String(receive); // Chuyển dữ liệu byte[] (ASCII) thành String 
+
+	// Xử lý String như bình thường rồi gửi lên server --> kết quả thu được String result
+
+	// Chuyển dữ liệu nguyên thuỷ thành mảng byte rồi gửi lên server 
+        byte[] sendBytes = result.getBytes();
+        os.write(sendBytes);
+        client.close();
+
+4. ObjectInputStream/ObjectOutputStream (bài 913, dễ thôi, khó là dùng khi dùng giao thức UDP ý)
+	// Đề yêu cầu tạo lớp TCP.Student thì phải tạo 1 class Student trong 1 package TCP và quan trọng là phải implements Serializable  và khai báo  private static final long serialVersionUID (paste trong đề ra)
+	
+	// Khai báo
+	Socket ClientS = new Socket(String host, int port);
+        ObjectInputStream ois = new ObjectInputStream(ClientSocket.getInputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(ClientSocket.getOutputStream());
+	
+	// Gửi dữ liệu lên Server, nhưng chú ý là dùng writeObject chứ không được writeUTF() hay writeInt() dù nó có hỗ trợ
+
+	// Đọc 1 Object từ server trả về (nhớ ép kiểu)	
+
+	  Student st = (Student) ois.readObject();
+
+	// xử lý logic, set lại các thuộc tính cho Object rồi gửi lên server (oos.writeObject(st));
+
+II. UDP
+- Vì là bên UDP gửi/nhận thông qua DatagramPacket nên phải chuyển các kiểu dữ liệu nguyên thuỷ (cụ thể là String, nếu không phải String thì chuyển về String thông qua 
+phương thức String.valueOf(int a/char a/...)) về mảng byte 
+	vd: 
+	String s = String.valueOf(3.5);
+	byte[] send = s.getBytes();
+
+(*) Chuyển 1 String thành mảng byte[] hoặc mảng char[] và ngược lại
+	String s = "Khanh";
+      byte[] b = s.getBytes();
+      char[] c = s.toCharArray();
+
+	String bytes = new String(b); // Khanh
+      String chars = new String(c); // Khanh
+
+- Ở TCP thì client.getInputStream()/client.getOutputStream() được gắn làm tham số truyền vào nên việc đọc, ghi dữ liệu rất dễ dàng. 
+Tuy nhiên ở bên UDP thì mỗi lần gửi nhận thì phải tạo ra 1 DatagramPacket mới, điều này làm các bạn bối rối khi mới học.
+
+1. Gửi/nhận dữ liệu
+	InetAddress inetAddress = InetAddress.getByName("203.162.10.109");
+        DatagramSocket client = new DatagramSocket();// không cần truyền port nhé, chỉ có server mới cần port
+
+	// chuyển dữ liệu cần truyền thành mảng byte[], giả sử byte[] send 
+
+	// Khởi tạo Packet để gửi dữ liệu (truyền đầy đủ các tham số, trong đó có cả địa chỉ và port)
+	DatagramPacket datagramPacket = new DatagramPacket(send, send.length,inetAddress,port);
+        client.send(datagramPacket);// gọi đến DatagramSocket để gửi, còn ở bên TCP đã được gắn làm tham số truyền vào rồi nên k cần
+
+	// Khởi tạo mảng byte để nhận dữ liệu rồi đóng gói vào Packet để nhận, không cần truyền địa chỉ và port
+	 byte[] receive = new byte[1024]; // Nhớ con số 1024, chính là tối đa 1024
+         DatagramPacket dta = new DatagramPacket(receive, receive.length);
+         client.receive(dta);
+	
+	// Sau khi Packet nhận về đã có dữ liệu thì lấy ra mảng byte[] trong Packet rồi chuyển ngược lại từ byte[] thành String  ( dùng new String() )
+	String receiveString = new String (dta.getData());
+
+	// Xử lý logic, giả sử kết quả nhận được là 1 String result
+
+	// Gửi dữ liệu kết quả lên server, chú ý chuyển thành mảng byte để truyền vào Packet
+	byte[] rs = result.getBytes();
+        DatagramPacket dpack = new DatagramPacket(rs,rs.length,inetAddress,2207);// gửi đi thì truyền đầy đủ các tham số
+        client.send(dpack);
+
+2. Gửi/nhận đối tượng (khó hơn UDP)
+- Khó hơn TCP khi gửi nhận Object do bên TCP thì client.getInputStream() hay client.getOutputStream() được chỉ định là tham số truyền vào nên hỗ trợ sẵn các cái xử lý
+Còn bên UDP thì phải chuyển tất cả dữ liệu về mảng byte để đóng gói vào Package (dù có là Object Class đi nữa)

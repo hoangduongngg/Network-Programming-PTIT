@@ -1,0 +1,8 @@
+[Mã câu hỏi: 936] [Loại bỏ ký tự đặc biệt và ký tự trùng, giữ nguyên thứ tự xuất hiện]
+Viết chương trình client với yêu cầu kết nối Server qua giao thức UDP tại cổng 1108 theo kịch bản:
+a.	Gửi thông điệp là 1 chuỗi chứa mã sinh viên mà mã câu hỏi theo định dạng ";student;qCode". Ví dụ: ";B15DCCN001;936"
+b. 	Nhận thông điệp là 1 chuỗi từ server theo định dạng "requestID;str1;str2".
++ 	requestID là chuỗi ngẫu nhiên duy nhất
++	str1, str2 lần lượt là chuỗi thứ nhất và chuỗi thứ hai
+c.	Thực hiện loại bỏ các ký tự trong chuỗi thứ nhất mà xuất hiện trong chuỗi thứ 2, yêu cầu giữ nguyên thứ tự xuất hiện của ký tự. Gửi chuỗi lên server theo định dạng "requestID;strOutput", trong đó chuỗi strOutput là chuỗi được xử lý
+d. 	Đóng socket và kết thúc

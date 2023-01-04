@@ -1,0 +1,62 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package udp_935;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
+public class UDP_935 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws SocketException, UnknownHostException, IOException {
+        // TODO code application logic here
+        DatagramSocket client = new DatagramSocket();
+        String msv = "";
+        DatagramPacket dpReq = new DatagramPacket(msv.getBytes(), msv.length(), InetAddress.getByName("203.162.10.109"), 2208);        
+        client.send(dpReq);
+        
+        byte[] buff = new byte[1024];
+        DatagramPacket dpRes = new DatagramPacket(buff, buff.length);
+        client.receive(dpRes);
+        String response = new String(dpRes.getData());
+        System.out.println(response);
+        String[] arrRes = response.trim().split(";");
+        String data = arrRes[1].trim();
+        String result = arrRes[0].trim() + ";";
+        
+        String check = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (int i = 0; i < data.length(); i++) {
+            boolean isNormalChar = false;
+            for (int j = 0; j < check.length(); j++) {
+                if (check.charAt(j) == data.charAt(i)) {
+                    isNormalChar = true;
+                    break;
+                }
+            }
+            for (int j = 0; j < i; j ++) {
+                if (data.charAt(i) == data.charAt(j)) {
+                    isNormalChar = false;
+                }
+            }
+            if (isNormalChar == true) {
+                result += data.charAt(i);
+            }
+        }       
+        
+        System.out.println(result);
+        
+        DatagramPacket dpResult = new DatagramPacket(result.getBytes(), result.length(), InetAddress.getByName("203.162.10.109"), 2208);        
+        client.send(dpResult);
+        
+        client.close();
+    }
+    
+}

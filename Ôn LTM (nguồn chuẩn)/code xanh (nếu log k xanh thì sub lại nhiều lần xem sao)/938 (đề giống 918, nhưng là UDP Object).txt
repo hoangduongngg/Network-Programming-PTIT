@@ -1,0 +1,48 @@
+public class B938 {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        DatagramSocket socket = new DatagramSocket();
+        String msv = "";
+        Customer938 cus = new Customer938();
+        cus.setCode(msv);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(cus);
+        byte[] sendBuf = bos.toByteArray();
+        DatagramPacket packet = new DatagramPacket(sendBuf, sendBuf.length,InetAddress.getByName("203.162.10.109"),2209);
+        socket.send(packet);
+        byte[] buf = new byte[1024];
+        packet = new DatagramPacket(buf, buf.length);
+        socket.receive(packet);
+        ByteArrayInputStream bis = new ByteArrayInputStream(packet.getData());
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        Customer938 kh = (Customer938) ois.readObject();
+        System.out.println(kh.toString());
+        String[] nameArr = kh.getName().trim().split(" ");
+        String newName = "";
+        newName+=nameArr[nameArr.length-1].trim().toUpperCase() + ",";
+        for(int i=0;i<nameArr.length-1;i++) {
+            String s = nameArr[i];
+            newName += " " + s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
+        }
+        kh.setName(newName);
+        System.out.println(newName);
+        String newUsername = "";
+        for(int i=0;i<nameArr.length-1;i++) {
+            newUsername+= nameArr[i].toLowerCase().substring(0,1);
+        }
+        newUsername += nameArr[nameArr.length-1].toLowerCase();
+        kh.setUserName(newUsername);
+        System.out.println(newUsername);
+        String dob = kh.getDayOfBirth();
+        String[] dobArr = dob.trim().split("-");
+        kh.setDayOfBirth(dobArr[1] + "/" + dobArr[0] + "/" + dobArr[2]);
+        System.out.println(dobArr[1] + "/" + dobArr[0] + "/" + dobArr[2]);
+        bos = new ByteArrayOutputStream();
+        oos = new ObjectOutputStream(bos);
+        oos.writeObject(kh);
+        sendBuf = bos.toByteArray();
+        packet = new DatagramPacket(sendBuf, sendBuf.length,InetAddress.getByName("203.162.10.109"),2209);
+        socket.send(packet);
+        
+    }
+}

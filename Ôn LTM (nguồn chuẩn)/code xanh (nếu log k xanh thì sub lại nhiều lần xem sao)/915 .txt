@@ -1,0 +1,26 @@
+public class B915 {
+    public static void main(String[] args) throws IOException {
+        Socket client = new Socket("203.162.10.109",2208);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        String msv = "";
+        bw.write(msv);
+        bw.newLine();
+        bw.flush();
+
+        String response = br.readLine();
+        response = response.replaceAll("[^a-zA-Z]","");
+        String result = "";
+        for (int i = 0; i < response.length(); i++) {
+            if(!result.contains((response.charAt(i)+"")))
+                result += response.charAt(i);
+        }
+        bw.write(result);
+        bw.newLine();
+        bw.flush();
+
+        client.close();
+        bw.close();
+        br.close();
+    }
+}s

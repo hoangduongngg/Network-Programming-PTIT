@@ -1,0 +1,9 @@
+[Mã câu hỏi: 934] Mật mã caesar, còn gọi là mật mã dịch chuyển, để giải quyết mã thì mỗi ký tự nhận được sẽ được thay thế bằng một ký tự cách nó một đoạn s. Ví dụ: với s = 3 thì ký tự "A" sẽ được thay thế bằng "D"
+Viết chương trình client thực hiện giao tiếp với server qua giao thức UDP, cổng 1107 theo kịch bản sau:
+a.	Gửi thông điệp là một chuỗi chứa mã sinh viên và mã câu hỏi theo định dạng ";studentCode;qCode". Ví dụ ";B15DCCN001;934"
+b. 	Nhận thông điệp là một chuỗi từ server theo định dạng "requestID;strEncode;s"
+.	requestID là chuỗi ngẫu nhiên duy nhất
+.	strEncode là chuỗi thông điệp bị mã hoá
+.	s là số nguyên độ dịch của mã
+c.	Thực hiện giải mã tìm thông điệp ban đầu và gửi lên server theo định dạng "requestID;strDecode"
+d.	Đóng socket và kết thúc

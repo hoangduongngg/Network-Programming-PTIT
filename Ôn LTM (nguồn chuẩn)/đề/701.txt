@@ -1,0 +1,8 @@
+[Mã câu hỏi: 701] Một chương trình (tạm gọi là server) được triển khai tại địa chỉ 203.162.10.109 (hỗ trợ thời gian giao tiếp tối đã cho mỗi yêu cầu là 5s), 
+yêu cầu xây dựng chương trình (tạm gọi là client) thực hiện kết nối với server trên tại cổng 2206, 
+sử dụng luồng byte dữ liệu (InputStream/OutputStream) để trao đổi thông tin theo thứ tự:
+
+a.	Gửi mã sinh viên và mã câu hỏi theo định dạng "studentCode;qCode". Ví dụ: "B16DCCN999;701"
+b.	Nhập dữ liệu từ server là một chuỗi các giá trị số nguyên được phân tách bởi kỹ tự ",". Ví dụ: 1, 3, 9, 19, 33, 20
+c.	Thực hiện tìm giá trị khoảng cách nhỏ nhất của các phần tử nằm trong chuỗi và 2 giá trị lớn nhất tạo nên khoảng cách đó. Ví dụ 1, 19, 20
+d.	Đóng kết nối và kết thúc

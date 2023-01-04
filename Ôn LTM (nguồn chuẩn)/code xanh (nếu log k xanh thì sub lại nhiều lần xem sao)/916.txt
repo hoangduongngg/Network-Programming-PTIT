@@ -1,0 +1,76 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ltm;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.*;
+import java.util.regex.Pattern;
+
+public class B916 {
+
+    Socket socket = null;
+    BufferedReader br = null;
+    BufferedWriter bw = null;
+
+    public B915() {
+        try {
+            socket = new Socket("203.162.10.109", 2208);
+            bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            bw.write("");
+            bw.newLine();
+            bw.flush();
+            String s1 = br.readLine();
+            String s2 = br.readLine();
+            String temp = Cal(s1,s2);
+            bw.write(temp);
+            bw.newLine();
+            bw.flush();
+            br.close();
+            bw.close();
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    public void close() {
+        if (socket != null && br != null && bw != null) {
+            try {
+                br.close();
+                bw.close();
+                socket.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private static String Cal(String s1, String s2) {
+        String tmp = "";
+        for (int i = 0; i < s1.length(); i++) {
+            boolean flag = false;
+            for (int j = 0; j < s2.length(); j++) {
+                if (s1.charAt(i) == s2.charAt(j)) {    
+                    flag= true;
+                }
+            }
+            if(!flag){
+                tmp = tmp + s1.charAt(i);
+            }
+        }
+        return tmp;
+    }
+
+    public static void main(String[] args) {
+        new B915();
+    }
+
+}
+Java.net M

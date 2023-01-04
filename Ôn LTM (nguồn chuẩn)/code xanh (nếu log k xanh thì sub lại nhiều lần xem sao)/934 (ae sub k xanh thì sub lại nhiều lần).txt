@@ -1,0 +1,71 @@
+Phạm Công Thành
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package UDP;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
+
+
+public class Client {
+
+    public static void main(String[] args) throws SocketException, UnknownHostException, IOException {
+
+        DatagramSocket client = new DatagramSocket();
+        String m1 = "";
+        byte[] m1bytes = m1.getBytes();
+
+        InetAddress address = InetAddress.getByName("203.162.10.109");
+        DatagramPacket p1 = new DatagramPacket(m1bytes, m1bytes.length, address, 2207);
+        client.send(p1);
+
+        DatagramPacket receivingPacket = new DatagramPacket(new byte[1024], 1024);
+        client.receive(receivingPacket);
+//        byte[] receive = new byte[1024];
+//        DatagramPacket dta = new DatagramPacket(receive, receive.length);
+//        String receivedString = new String(dta.getData());
+        byte[] receivingMessageByte = receivingPacket.getData();
+        String reiceivingMessage = new String(receivingMessageByte, StandardCharsets.UTF_8);
+        System.out.println(reiceivingMessage);
+
+        String[] receivedString = reiceivingMessage.split(";");
+
+        String strEncode = receivedString[1].trim();
+        int s = Integer.parseInt(receivedString[2].trim());
+        char[] charArray = strEncode.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            if ((charArray[i] + "").matches("[a-z]")) {
+                charArray[i] = (char) ((charArray[i] - 'a' + s) % 26 + 'a');
+            } else if ((charArray[i] + "").matches("[A-Z]")) {
+                charArray[i] = (char) ((charArray[i] - 'A' + s) % 26 + 'A');
+            }
+        }
+        String result = receivedString[0] + ";" + new String(charArray);
+        byte[] send = result.getBytes();
+
+        DatagramPacket dataP = new DatagramPacket(send, send.length, address, 2207);
+        client.send(dataP);
+
+        client.close();
+
+    }
+}
+
+//
+//[Mã câu hỏi: 934]Mật mã caesar, còn gọi là mật mã dịch chuyển, để giải mã thì mỗi ký tự nhận được sẽ được thay thế bằng một ký tự cách nó một đoạn s. Ví dụ: với s = 3 thì ký tự “A” sẽ được thay thế bằng “D”.
+//Viết chương trình client thực hiện giao tiếp với server qua giao thức UDP, cổng 2207 theo kịch bản sau:
+//a.	Gửi thông điệp là một chuỗi chứa mã sinh viên và mã câu hỏi theo định dạng ";studentCode;qCode". Ví dụ: ";B15DCCN001;934"
+//b.	Nhận thông điệp là một chuỗi từ server theo định dạng "requestId;strEncode;s".
+//•	requestId là chuỗi ngẫu nhiên duy nhất
+//•	strEncode là chuỗi thông điệp bị mã hóa
+//•	s là số nguyên độ dịch của mã
+//c.	Thực hiện giải mã tìm thông điệp ban đầu và gửi lên server theo định dạng “requestId;strDecode”
+//d.	Đóng socket và kết thúc
+'

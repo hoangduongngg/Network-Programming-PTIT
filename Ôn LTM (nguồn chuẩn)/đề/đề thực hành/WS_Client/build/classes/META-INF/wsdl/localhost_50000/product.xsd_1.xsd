@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3 (RELEASE-2.4.3-ad3323c; 2019-01-21T17:46:06+0000) JAXWS-RI/2.3.2 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://WS/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://WS/">
+
+<xs:element name="getProduct" type="tns:getProduct"/>
+
+<xs:element name="getProductResponse" type="tns:getProductResponse"/>
+
+<xs:element name="insertProduct" type="tns:insertProduct"/>
+
+<xs:element name="insertProductResponse" type="tns:insertProductResponse"/>
+
+<xs:complexType name="insertProduct">
+<xs:sequence>
+<xs:element name="arg0" type="tns:product" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="product">
+<xs:sequence>
+<xs:element name="createdUser" type="xs:string" minOccurs="0"/>
+<xs:element name="exportPrice" type="xs:float"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="importPrice" type="xs:float"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="studentCode" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="insertProductResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProduct">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getProductResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:product" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

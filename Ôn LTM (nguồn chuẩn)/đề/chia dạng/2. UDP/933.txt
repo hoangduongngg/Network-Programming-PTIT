@@ -1,0 +1,17 @@
+[Mã câu hỏi: 933] Một chương trình (tạm gọi là server) được triển khai tại địa chỉ 203.162.10.109, sử dụng giao thực UDP tại cổng 2209, yêu cầu xây dựng chương trình (tạm gọi là client) thực hiện
+Giao tiếp với server tại cổng 2209 theo kịch bản
+Trong đó, đối tượng trao đổi là thể hiện của lớp Student được mô tả như sau:
+.	Tên đầy đủ lớp: UDP.Student933
+.	Các thuộc tính: String id, String code, String name, String email
+.	Hàm khởi tạo
++	public Student(String id, String code, String name, String email)
++	public Student(String code)
+.	Trường dữ liệu: private static final long serialVersionUID = 20161107
+Thực hiện
+a.	Gửi thông điệp là một đối tượng thể hiện của lớp Student với thông tin được thiết lập là code với giá trị tương ứng là mã sinh viên
+b.	Nhận 1 đối tượng là thể hiện của lớp Student từ server với các thông tin được thiết lập gồm id và name 
+c.	Thực hiện
+- 	Chuẩn hoá tên theo nguyên tắc: Chữ cái đầu tiên in hoa, các chữ cái còn lại in thường và cập nhật lại trường name
+-	Tạp email ptit.edu.vn từ tên người dùng bằng cách lấy tên và chữ cái bắt đầu của họ và tên đệm. Ví dụ: nguyen van tuan nam --> namvt@ptit.edu.vn. Thực hiện gán cho trường email của đối tượng nhận được
+-	Gửi thông điệp chứa đối tượng xử lý ở bước c lên Server
+d.	Đóng socket và kết thúc
